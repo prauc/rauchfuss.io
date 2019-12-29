@@ -5,13 +5,16 @@ pipelines:
   default:
     - step:
         name: Build & Push
-        image: atlassian/default-image:2
+        image: google/cloud-sdk:latest
         caches:
           - docker
         services:
           - docker
         script:
           - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
+          - gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=credentials/rauchfuss-io-5ba2172ea3b0.json
+          - gcloud config list
+          - gcloud auth configure-docker -q
           - docker build -t rauchfussio .
           - docker tag rauchfussio $IMAGE_NAME
           - docker push $IMAGE_NAME
