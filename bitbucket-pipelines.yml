@@ -14,11 +14,12 @@ pipelines:
           - export SERVICE_NAME=$CLOUDRUN_SERVICE_NAME
 
           - docker build -t $IMAGE_NAME .
+          - docker tag rauchfussio $IMAGE_NAME
 
           - gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=credentials/rauchfuss-io-5ba2172ea3b0.json
           - gcloud config list
           - gcloud auth configure-docker -q
 
-          - docker push $IMAGE_NAME
+          - docker push rauchfussio
 
           - gcloud beta run deploy $SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1
