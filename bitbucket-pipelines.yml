@@ -4,7 +4,7 @@ options:
 pipelines:
   default:
     - step:
-        name: Build & Push
+        name: Build & Push Docker-Image
         image: google/cloud-sdk:latest
         caches:
           - docker
