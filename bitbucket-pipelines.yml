@@ -4,11 +4,6 @@ options:
 pipelines:
   default:
     - step:
-        name: Configure
-        script:
-          - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE # ex. gcr.io/my-g-project/my-cr-service
-          - export SERVICE_NAME=$CLOUDRUN_SERVICE_NAME
-    - step:
         name: Build
         image: atlassian/default-image:2
         caches:
@@ -16,6 +11,7 @@ pipelines:
         services:
           - docker
         script:
+          - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE # ex. gcr.io/my-g-project/my-cr-service
           - docker build -t rauchfussio .
           - docker tag rauchfussio $IMAGE_NAME
     - step:
@@ -28,9 +24,10 @@ pipelines:
     - step:
         name: Push
         script:
+          - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE # ex. gcr.io/my-g-project/my-cr-service
           - docker push $IMAGE_NAME
     - step:
         name: Deploy
         image: google/cloud-sdk:latest
         script:
-          - gcloud beta run deploy $SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
+          - gcloud beta run deploy $CLOUDRUN_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
