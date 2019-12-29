@@ -12,9 +12,11 @@ pipelines:
           - docker
         script:
           - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
+
           - gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=credentials/rauchfuss-io-5ba2172ea3b0.json
           - gcloud config list
           - gcloud auth configure-docker -q
+
           - docker build -t rauchfussio .
           - docker tag rauchfussio $IMAGE_NAME
           - docker push $IMAGE_NAME
@@ -22,6 +24,8 @@ pipelines:
         name: Deploy to CloudRun
         image: google/cloud-sdk:latest
         script:
+          - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
+
           - gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=credentials/rauchfuss-io-5ba2172ea3b0.json
           - gcloud config list
           - gcloud auth configure-docker -q
