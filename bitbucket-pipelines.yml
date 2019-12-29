@@ -20,6 +20,6 @@ pipelines:
           - gcloud config list
           - gcloud auth configure-docker -q
 
-          - docker push rauchfussio
+          - docker push $IMAGE_NAME
 
           - gcloud beta run deploy $SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1
