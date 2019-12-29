@@ -22,4 +22,4 @@ pipelines:
 
           - docker push $IMAGE_NAME
 
-          - gcloud beta run deploy $SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1
+          - gcloud beta run deploy $SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
