@@ -13,7 +13,7 @@ pipelines:
         script:
           - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
 
-          - gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=credentials/rauchfuss-io-5ba2172ea3b0.json
+          - echo $CLIENT_CREDENTIALS > rauchfuss-io-5ba2172ea3b0.json | gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=./rauchfuss-io-5ba2172ea3b0.json
           - gcloud config list
           - gcloud auth configure-docker -q
 
@@ -26,7 +26,7 @@ pipelines:
         script:
           - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
 
-          - gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=credentials/rauchfuss-io-5ba2172ea3b0.json
+          - echo $CLIENT_CREDENTIALS > rauchfuss-io-5ba2172ea3b0.json | gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=./rauchfuss-io-5ba2172ea3b0.json
           - gcloud config list
           - gcloud auth configure-docker -q
           - gcloud beta run deploy $CLOUDRUN_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
