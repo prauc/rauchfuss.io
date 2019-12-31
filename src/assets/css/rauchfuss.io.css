@@ -1,0 +1,23 @@
+.timeline>li>.timeline-badge.secondary {
+    background-color: #999;
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(76, 175, 80, 0.4);
+}
+
+.badge-default[href]:hover,
+.badge-default[href]:focus {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #8c8c8c;
+}
+
+.timeline-panel {
+    opacity: .9;
+}
+
+.legal {
+    opacity: .9;
+}
+
+.timeline:before {
+    width: 2px!important;
+}
