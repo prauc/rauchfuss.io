@@ -21,3 +21,7 @@
 .timeline:before {
     width: 2px!important;
 }
+
+.header-filter:after {
+    z-index: 0;
+}
