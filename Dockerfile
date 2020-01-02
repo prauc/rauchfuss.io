@@ -1,4 +1,6 @@
-FROM httpd:2.4
+FROM php:apache
 
-COPY src /usr/local/apache2/htdocs/
-COPY .docker/httpd.conf /usr/local/apache2/conf/
+COPY src /var/www/html
+
+RUN a2enmod expires
+RUN a2enmod deflate
