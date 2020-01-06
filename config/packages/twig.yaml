@@ -1,2 +1,5 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
+    globals:
+        ga_tracking: 'UA-155156819-1'
+        symfony: '@App\Generator\SymfonyGenerator'

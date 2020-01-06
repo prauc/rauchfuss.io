@@ -25,3 +25,14 @@
 .header-filter:after {
     z-index: 0;
 }
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.footer .copyright .blockquote {
+    font-size: .95rem;
+    color: #fff;
+}

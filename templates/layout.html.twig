@@ -2,10 +2,11 @@
 
 {% block body %}
     <body {% block bodyclass %}{% endblock %}>
-        {% include('navigation.html.twig') %}
+        {% include('header.html.twig') %}
 
         {% block content %}{% endblock %}
 
+        {% include('footer.html.twig') %}
         {% include('javascripts.html.twig') %}
     </body>
 {% endblock %}
