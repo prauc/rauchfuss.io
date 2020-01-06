@@ -13,7 +13,7 @@ class CVController extends AbstractController
     public function index()
     {
         return $this->render('cv/index.html.twig', [
-            'controller_name' => 'CVController',
+            'title' => 'CV',
         ]);
     }
 }

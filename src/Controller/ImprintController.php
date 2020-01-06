@@ -13,7 +13,7 @@ class ImprintController extends AbstractController
     public function index()
     {
         return $this->render('imprint/index.html.twig', [
-            'controller_name' => 'ImprintController',
+            'title' => 'Imprint',
         ]);
     }
 }
