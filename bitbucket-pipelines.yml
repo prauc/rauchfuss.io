@@ -31,7 +31,7 @@ pipelines:
               - docker tag rauchfussio $IMAGE_NAME
               - docker push $IMAGE_NAME
         - step:
-            name: Deploy to CloudRun
+            name: Deploy to CloudRun Staging
             image: google/cloud-sdk:latest
             script:
               - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
@@ -39,4 +39,15 @@ pipelines:
               - echo $CLIENT_CREDENTIALS > rauchfuss-io-5ba2172ea3b0.json | gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=./rauchfuss-io-5ba2172ea3b0.json
               - gcloud config list
               - gcloud auth configure-docker -q
-              - gcloud beta run deploy $CLOUDRUN_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
+              - gcloud beta run deploy $CLOUDRUN_STAGING_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
+        - step:
+            name: Deploy to CloudRun Production
+            image: google/cloud-sdk:latest
+            trigger: manual
+            script:
+              - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
+
+              - echo $CLIENT_CREDENTIALS > rauchfuss-io-5ba2172ea3b0.json | gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=./rauchfuss-io-5ba2172ea3b0.json
+              - gcloud config list
+              - gcloud auth configure-docker -q
+              - gcloud beta run deploy $CLOUDRUN_PROD_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
