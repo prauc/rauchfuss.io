@@ -14,27 +14,15 @@ pipelines:
             script:
               - composer install --ignore-platform-reqs
         - step:
-            name: build docker image
-            image: atlassian/default-image:2
-            caches:
-              - docker
-            services:
-              - docker
-            artifacts:
-              - tmp-image.docker
-            script:
-              - docker build -t rauchfussio .
-              - docker save --output tmp-image.docker rauchfussio
-        - step:
-            name: push to GCP registry
+            name: build & push to GCP registry
             image: google/cloud-sdk:latest
             script:
               - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
-              - docker load --input ./tmp-image.docker
 
               - echo $CLIENT_CREDENTIALS > rauchfuss-io-5ba2172ea3b0.json | gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=./rauchfuss-io-5ba2172ea3b0.json
               - gcloud config list
               - gcloud auth configure-docker -q
+              - docker build -t rauchfussio .
               - docker tag rauchfussio $IMAGE_NAME
               - docker push $IMAGE_NAME
         - step:
