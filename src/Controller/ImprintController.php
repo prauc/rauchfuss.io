@@ -12,7 +12,6 @@ class ImprintController extends AbstractController
      */
     public function index()
     {
-        dump($this->getParameter('kernel.environment'));
         return $this->render('imprint/index.html.twig', [
             'title' => 'Imprint',
         ]);
