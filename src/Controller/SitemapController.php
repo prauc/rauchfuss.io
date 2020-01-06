@@ -23,7 +23,9 @@ class SitemapController extends AbstractController
      */
     public function index(Request $request, RouterInterface $router)
     {
-        $encoders = [new XmlEncoder()];
+        $encoders = [new XmlEncoder([
+            XMLEncoder::ROOT_NODE_NAME => 'urlset'
+        ])];
         $normalizers = [new ObjectNormalizer()];
 
         $serializer = new Serializer($normalizers, $encoders);
