@@ -5,7 +5,7 @@ pipelines:
   branches:
       master:
         - step:
-            name: Install Dependencies
+            name: install dependencies
             image: composer
             caches:
               - composer
@@ -14,24 +14,30 @@ pipelines:
             script:
               - composer install --ignore-platform-reqs
         - step:
-            name: Build & Push Docker-Image
-            image: google/cloud-sdk:latest
+            name: build docker image
+            image: docker:latest
             caches:
               - docker
             services:
               - docker
+            artifacts:
+              - tmp-image.docker
+            script:
+              - docker build -t rauchfussio .
+              - docker save --output tmp-image.docker rauchfussio
+        - step:
+            name: push to GCP registry
             script:
               - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
+              - docker load --input ./tmp-image.docker
 
               - echo $CLIENT_CREDENTIALS > rauchfuss-io-5ba2172ea3b0.json | gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=./rauchfuss-io-5ba2172ea3b0.json
               - gcloud config list
               - gcloud auth configure-docker -q
-
-              - docker build -t rauchfussio .
               - docker tag rauchfussio $IMAGE_NAME
               - docker push $IMAGE_NAME
         - step:
-            name: Deploy to CloudRun Staging
+            name: deploy to CloudRun staging
             image: google/cloud-sdk:latest
             script:
               - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
@@ -41,7 +47,7 @@ pipelines:
               - gcloud auth configure-docker -q
               - gcloud beta run deploy $CLOUDRUN_STAGING_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
         - step:
-            name: Deploy to CloudRun Production
+            name: deploy to CloudRun production
             image: google/cloud-sdk:latest
             trigger: manual
             script:
