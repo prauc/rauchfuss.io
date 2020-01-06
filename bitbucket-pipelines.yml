@@ -5,6 +5,15 @@ pipelines:
   branches:
       master:
         - step:
+            name: Install Dependencies
+            image: composer
+            caches:
+              - composer
+            artifacts:
+              - vendor/**
+            script:
+              - composer install --ignore-platform-reqs
+        - step:
             name: Build & Push Docker-Image
             image: google/cloud-sdk:latest
             caches:
