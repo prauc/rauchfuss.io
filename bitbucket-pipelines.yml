@@ -2,31 +2,32 @@ options:
   docker: true
 
 pipelines:
-  default:
-    - step:
-        name: Build & Push Docker-Image
-        image: google/cloud-sdk:latest
-        caches:
-          - docker
-        services:
-          - docker
-        script:
-          - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
+  branches:
+      master:
+        - step:
+            name: Build & Push Docker-Image
+            image: google/cloud-sdk:latest
+            caches:
+              - docker
+            services:
+              - docker
+            script:
+              - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
 
-          - echo $CLIENT_CREDENTIALS > rauchfuss-io-5ba2172ea3b0.json | gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=./rauchfuss-io-5ba2172ea3b0.json
-          - gcloud config list
-          - gcloud auth configure-docker -q
+              - echo $CLIENT_CREDENTIALS > rauchfuss-io-5ba2172ea3b0.json | gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=./rauchfuss-io-5ba2172ea3b0.json
+              - gcloud config list
+              - gcloud auth configure-docker -q
 
-          - docker build -t rauchfussio .
-          - docker tag rauchfussio $IMAGE_NAME
-          - docker push $IMAGE_NAME
-    - step:
-        name: Deploy to CloudRun
-        image: google/cloud-sdk:latest
-        script:
-          - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
+              - docker build -t rauchfussio .
+              - docker tag rauchfussio $IMAGE_NAME
+              - docker push $IMAGE_NAME
+        - step:
+            name: Deploy to CloudRun
+            image: google/cloud-sdk:latest
+            script:
+              - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
 
-          - echo $CLIENT_CREDENTIALS > rauchfuss-io-5ba2172ea3b0.json | gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=./rauchfuss-io-5ba2172ea3b0.json
-          - gcloud config list
-          - gcloud auth configure-docker -q
-          - gcloud beta run deploy $CLOUDRUN_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
+              - echo $CLIENT_CREDENTIALS > rauchfuss-io-5ba2172ea3b0.json | gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=./rauchfuss-io-5ba2172ea3b0.json
+              - gcloud config list
+              - gcloud auth configure-docker -q
+              - gcloud beta run deploy $CLOUDRUN_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID

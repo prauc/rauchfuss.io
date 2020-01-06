@@ -1,6 +1,17 @@
 FROM php:apache
 
-COPY src /var/www/html
+WORKDIR /var/www/html
 
 RUN a2enmod expires
 RUN a2enmod deflate
+RUN a2enmod rewrite
+
+COPY .docker/rauchfuss-io.conf /etc/apache2/sites-available
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
+RUN a2ensite rauchfuss-io
+RUN a2dissite 000-default
+
+COPY . .
+RUN chown -R www-data:www-data .
+RUN composer install
