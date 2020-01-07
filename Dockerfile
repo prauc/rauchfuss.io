@@ -2,8 +2,6 @@ FROM php:apache
 
 WORKDIR /var/www/html
 
-RUN chown -R www-data:www-data .
-
 RUN a2enmod expires
 RUN a2enmod deflate
 RUN a2enmod rewrite
@@ -14,3 +12,5 @@ RUN a2ensite rauchfuss-io
 RUN a2dissite 000-default
 
 COPY . .
+
+RUN chown -R www-data:www-data ./var
