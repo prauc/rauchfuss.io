@@ -19,7 +19,7 @@ pipelines:
             script:
               - export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
 
-              - echo "BUILD=$BITBUCKET_BUILD_NUMBER" >> .env
+              - sed -i "/BUILD=/c\BUILD=$BITBUCKET_BUILD_NUMBER" .env
 
               - echo $CLIENT_CREDENTIALS > rauchfuss-io-5ba2172ea3b0.json | gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=./rauchfuss-io-5ba2172ea3b0.json
               - gcloud config list
