@@ -13,4 +13,4 @@ RUN a2dissite 000-default
 
 COPY . .
 
-RUN chown -R www-data:www-data ./var
+RUN chown -R www-data:www-data .
