@@ -11,6 +11,7 @@ jobs:
     docker:
       - image: google/cloud-sdk:latest
     steps:
+      - checkout
       - run: export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
       - run:
           name: Auth against GCP
