@@ -6,8 +6,8 @@ jobs:
     steps:
       - checkout
       - run: composer install --ignore-platform-reqs
-    store_artifacts:
-      path: /vendor
+      - store_artifacts:
+          path: /vendor
 
 workflows:
   version: 2
