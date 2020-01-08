@@ -12,7 +12,7 @@ jobs:
       - image: google/cloud-sdk:latest
     steps:
       - checkout
-      - run: export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
+      - run: export IMAGE_NAME="$HOSTNAME/$PROJECTID/$IMAGE"
       - run:
           name: Auth against GCP
           command: |
@@ -24,8 +24,8 @@ jobs:
           name: Build Image & Push to Container Registry
           command: |
             docker build -t rauchfussio .
-            docker tag rauchfussio $IMAGE_NAME
-            docker push $IMAGE_NAME
+            docker tag rauchfussio ${IMAGE_NAME}
+            docker push ${IMAGE_NAME}
 
 workflows:
   version: 2
