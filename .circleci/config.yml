@@ -9,7 +9,7 @@ jobs:
 
   deploy:
     docker:
-      - image: google/cloud-sdk:alpine
+      - image: google/cloud-sdk:latest
     steps:
       - checkout
       - run: export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
