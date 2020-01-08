@@ -18,8 +18,7 @@ jobs:
             echo $CLIENT_CREDENTIALS | gcloud auth activate-service-account --key-file=-
             gcloud config list
             gcloud auth configure-docker -q
-      - setup_remote_docker:
-          docker_layer_caching: true
+      - setup_remote_docker
       - run:
           name: Build Image & Push to Container Registry
           command: |
