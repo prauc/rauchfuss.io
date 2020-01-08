@@ -11,16 +11,15 @@ jobs:
     docker:
       - image: google/cloud-sdk:latest
     steps:
-      - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
       - run: export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
       - run:
           name: Auth against GCP
           command: |
-            echo $CLIENT_CREDENTIALS > rauchfuss-io-5ba2172ea3b0.json | gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=./rauchfuss-io-5ba2172ea3b0.json
+            echo $CLIENT_CREDENTIALS | gcloud auth activate-service-account --key-file=-
             gcloud config list
             gcloud auth configure-docker -q
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
           name: Build Image & Push to Container Registry
           command: |
