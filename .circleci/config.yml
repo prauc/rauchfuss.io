@@ -5,4 +5,10 @@ jobs:
       - image: composer:1.9
     steps:
       - checkout
-      - composer install --ignore-platform-reqs
+      - run: composer install --ignore-platform-reqs
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
