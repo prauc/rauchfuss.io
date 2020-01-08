@@ -12,6 +12,8 @@ jobs:
       - image: google/cloud-sdk:latest
     steps:
       - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run: export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
       - run:
           name: Auth against GCP
