@@ -6,11 +6,31 @@ jobs:
     steps:
       - checkout
       - run: composer install --ignore-platform-reqs
-      - store_artifacts:
-          path: /vendor
+
+  deploy:
+    docker:
+      - image: google/cloud-sdk:alpine
+    steps:
+      - checkout
+      - run: export IMAGE_NAME=$HOSTNAME/$PROJECTID/$IMAGE
+      - run:
+          name: Auth against GCP
+          command: |
+            echo $CLIENT_CREDENTIALS > rauchfuss-io-5ba2172ea3b0.json | gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=./rauchfuss-io-5ba2172ea3b0.json
+            gcloud config list
+            gcloud auth configure-docker -q
+      - run:
+          name: Build Image & Push to Container Registry
+          command: |
+            docker build -t rauchfussio .
+            docker tag rauchfussio $IMAGE_NAME
+            docker push $IMAGE_NAME
 
 workflows:
   version: 2
   build:
     jobs:
       - build
+      - deploy
+        requires:
+          - build
