@@ -1,0 +1,8 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: composer:1.9
+    steps:
+      - checkout
+      - composer install --ignore-platform-reqs
