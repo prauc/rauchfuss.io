@@ -1,6 +1,9 @@
 version: 2.1
 
 references:
+  image_name: &image_name
+    $HOSTNAME/$PROJECTID/$IMAGE
+
   auth: &auth
     run:
       name: Auth against GCP
@@ -23,6 +26,8 @@ jobs:
             - vendor
 
   deploy_image:
+    environment:
+      - IMAGE_NAME: *image_name
     docker:
       - image: google/cloud-sdk:alpine
     steps:
@@ -38,10 +43,12 @@ jobs:
           name: Build Image & Push to Container Registry
           command: |
             docker build -t rauchfussio .
-            docker tag rauchfussio $HOSTNAME/$PROJECTID/$IMAGE
-            docker push $HOSTNAME/$PROJECTID/$IMAGE
+            docker tag rauchfussio $IMAGE_NAME
+            docker push $IMAGE_NAME
 
   deploy_revision:
+    environment:
+      - IMAGE_NAME: *image_name
     docker:
       - image: google/cloud-sdk:alpine
     steps:
