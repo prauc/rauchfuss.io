@@ -48,7 +48,7 @@ jobs:
             docker tag rauchfussio $IMAGE_NAME
             docker push $IMAGE_NAME
 
-  deploy_revision:
+  deploy_revision_staging:
     environment:
       - IMAGE_NAME: *image_name
     docker:
@@ -67,6 +67,6 @@ workflows:
       - build_deploy_image:
           requires:
             - dependencies
-      - deploy_revision:
+      - deploy_revision_staging:
           requires:
-            - deploy_image
+            - build_deploy_image
