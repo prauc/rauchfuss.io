@@ -1,4 +1,15 @@
 version: 2.1
+
+references:
+  auth: &auth
+    run:
+      name: Auth against GCP
+      command: |
+        echo $CLIENT_CREDENTIALS | gcloud auth activate-service-account --key-file=-
+        gcloud config list
+        gcloud auth configure-docker -q
+
+
 jobs:
   build:
     docker:
@@ -11,17 +22,12 @@ jobs:
           paths:
             - vendor
 
-  deploy:
+  deploy_image:
     docker:
-      - image: google/cloud-sdk:latest
+      - image: google/cloud-sdk:alpine
     steps:
       - checkout
-      - run:
-          name: Auth against GCP
-          command: |
-            echo $CLIENT_CREDENTIALS | gcloud auth activate-service-account --key-file=-
-            gcloud config list
-            gcloud auth configure-docker -q
+      - *auth
       - setup_remote_docker
       - attach_workspace:
           at: /tmp
@@ -35,14 +41,21 @@ jobs:
             docker tag rauchfussio $HOSTNAME/$PROJECTID/$IMAGE
             docker push $HOSTNAME/$PROJECTID/$IMAGE
 
+  deploy_revision:
+    docker:
+      - image: google/cloud-sdk:alpine
+    steps:
+      - *auth
+      - gcloud beta run deploy $CLOUDRUN_STAGING_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
+
 workflows:
   version: 2
-  build_and_test:
+  build_and_deploy:
     jobs:
       - build
-      - deploy:
+      - deploy_image:
           requires:
             - build
-          filters:
-            branches:
-              only: master
+      - deploy_revision:
+          requires:
+            - deploy_image
