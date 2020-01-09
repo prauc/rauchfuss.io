@@ -93,7 +93,7 @@ jobs:
           paths:
             - /caches/rauchfussio.tar
       - run:
-          name: Build Image & Push to Container Registry
+          name: Push to Container Registry
           command: |
             docker tag rauchfussio $IMAGE_NAME
             docker push $IMAGE_NAME
