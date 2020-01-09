@@ -72,7 +72,7 @@ jobs:
 
 workflows:
   version: 2
-  build_and_deploy:
+  "Build, Test and Deploy":
     jobs:
       - install_dependencies
       - build_and_deploy_image:

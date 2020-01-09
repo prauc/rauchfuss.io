@@ -87,6 +87,9 @@
     "ocramius/proxy-manager": {
         "version": "2.2.3"
     },
+    "overtrue/phplint": {
+        "version": "1.2.1"
+    },
     "php": {
         "version": "7.3"
     },
@@ -252,6 +255,9 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.13.1"
+    },
+    "symfony/process": {
+        "version": "v5.0.2"
     },
     "symfony/property-access": {
         "version": "v5.0.2"
