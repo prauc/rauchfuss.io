@@ -23,7 +23,14 @@ jobs:
       - image: composer:1.9
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - 'composer-{{ checksum "composer.lock"  }}'
       - run: composer install --ignore-platform-reqs
+      - save_cache:
+          key: 'composer-{{ checksum "composer.lock"  }}'
+          paths:
+            - vendor
       - persist_to_workspace:
           root: .
           paths:
