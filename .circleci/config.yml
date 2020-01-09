@@ -68,7 +68,7 @@ jobs:
       - *auth
       - run:
           name: Deploy new Revision
-          command: gcloud beta run deploy $CLOUDRUN_PRODUCTION_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
+          command: gcloud beta run deploy $CLOUDRUN_PROD_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
 
 workflows:
   version: 2
