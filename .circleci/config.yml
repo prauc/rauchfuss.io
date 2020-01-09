@@ -6,9 +6,8 @@ jobs:
     steps:
       - checkout
       - run: composer install --ignore-platform-reqs
-      - run: mkdir /tmp
       - persist_to_workspace:
-          root: /tmp
+          root: .
           paths:
             - vendor
 
