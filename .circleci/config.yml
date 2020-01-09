@@ -6,6 +6,10 @@ jobs:
     steps:
       - checkout
       - run: composer install --ignore-platform-reqs
+      - persist_to_workspace:
+          root: .
+          paths:
+            - vendor
 
   deploy:
     docker:
