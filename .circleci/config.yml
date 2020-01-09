@@ -46,7 +46,9 @@ jobs:
       - image: google/cloud-sdk:alpine
     steps:
       - *auth
-      - gcloud beta run deploy $CLOUDRUN_STAGING_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
+      - run:
+          name: Deploy new Revision
+          command: gcloud beta run deploy $CLOUDRUN_STAGING_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
 
 workflows:
   version: 2
