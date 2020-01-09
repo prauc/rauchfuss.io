@@ -2,7 +2,7 @@ version: 2.1
 
 references:
   image_name: &image_name
-    $HOSTNAME/$PROJECTID/$IMAGE
+    eu.gcr.io/rauchfuss-io/rauchfuss-io
 
   auth: &auth
     run:
@@ -11,7 +11,6 @@ references:
         echo $CLIENT_CREDENTIALS | gcloud auth activate-service-account --key-file=-
         gcloud config list
         gcloud auth configure-docker -q
-
 
 jobs:
   build:
