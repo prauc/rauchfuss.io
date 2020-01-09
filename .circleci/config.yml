@@ -12,6 +12,11 @@ references:
         gcloud config list
         gcloud auth configure-docker -q
 
+  copy_vendor: &copy_vendor
+    run:
+      name: Copy vendor directory
+      command: cp -R /tmp/vendor .
+
 jobs:
   install_dependencies:
     docker:
@@ -24,6 +29,24 @@ jobs:
           paths:
             - vendor
 
+  test_functional:
+    docker:
+      - image: circleci/php:cli
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp
+      - run: ./bin/phpunit
+
+  test_lint:
+    docker:
+      - image: circleci/php:cli
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp
+      - run: ./vendor/bin/phplint
+
   build_and_deploy_image:
     environment:
       - IMAGE_NAME: *image_name
@@ -35,9 +58,7 @@ jobs:
       - setup_remote_docker
       - attach_workspace:
           at: /tmp
-      - run:
-          name: Copy vendor directory
-          command: cp -R /tmp/vendor .
+      - *copy_vendor
       - run:
           name: Update Build-Hash
           command: sed -i "/BUILD=/c\BUILD=$CIRCLE_SHA1" .env
@@ -75,9 +96,17 @@ workflows:
   "Build, Test and Deploy":
     jobs:
       - install_dependencies
+      - test_functional:
+          requires:
+            - install_dependencies
+      - test_lint:
+          requires:
+            - install_dependencies
       - build_and_deploy_image:
           requires:
             - install_dependencies
+            - test_functional
+            - test_lint
       - deploy_revision_staging:
           requires:
             - build_and_deploy_image
@@ -85,6 +114,8 @@ workflows:
           type: approval
           requires:
             - install_dependencies
+            - test_functional
+            - test_lint
             - deploy_revision_staging
       - deploy_revision_production:
           requires:
