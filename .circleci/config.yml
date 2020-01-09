@@ -13,7 +13,7 @@ references:
         gcloud auth configure-docker -q
 
 jobs:
-  build:
+  dependencies:
     docker:
       - image: composer:1.9
     steps:
@@ -24,7 +24,7 @@ jobs:
           paths:
             - vendor
 
-  deploy_image:
+  build_deploy_image:
     environment:
       - IMAGE_NAME: *image_name
     docker:
@@ -38,6 +38,9 @@ jobs:
       - run:
           name: Copy vendor directory
           command: cp -R /tmp/vendor .
+      - run:
+          name: Update Build-Hash
+          command: sed -i "/BUILD=/c\BUILD=$CIRCLE_SHA1" .env
       - run:
           name: Build Image & Push to Container Registry
           command: |
@@ -60,10 +63,10 @@ workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - build
-      - deploy_image:
+      - dependencies
+      - build_deploy_image:
           requires:
-            - build
+            - dependencies
       - deploy_revision:
           requires:
             - deploy_image
