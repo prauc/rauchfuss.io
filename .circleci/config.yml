@@ -73,7 +73,7 @@ jobs:
           command: sed -i "/BUILD=/c\BUILD=$CIRCLE_SHA1" .env
       - restore_cache:
           keys:
-            - 'docker-{{ checksum "rauchfussio.tar"  }}'
+            - docker-{{ .Branch }}
       - run:
           name: Load Docker image layer cache
           command: |
@@ -89,7 +89,7 @@ jobs:
             mkdir -p /caches
             docker save -o /caches/rauchfussio.tar rauchfussio
       - save_cache:
-          key: 'docker-{{ checksum "rauchfussio.tar"  }}'
+          key: docker-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/rauchfussio.tar
       - run:
