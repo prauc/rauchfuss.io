@@ -23,7 +23,7 @@ jobs:
             gcloud config list
             gcloud auth configure-docker -q
       - setup_remote_docker
-      - attach_workspace
+      - attach_workspace:
           at: /tmp/workspace
       - run:
           name: Copy vendor directory
