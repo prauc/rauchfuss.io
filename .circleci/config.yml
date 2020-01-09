@@ -13,7 +13,7 @@ references:
         gcloud auth configure-docker -q
 
 jobs:
-  dependencies:
+  install_dependencies:
     docker:
       - image: composer:1.9
     steps:
@@ -24,7 +24,7 @@ jobs:
           paths:
             - vendor
 
-  build_deploy_image:
+  build_and_deploy_image:
     environment:
       - IMAGE_NAME: *image_name
     docker:
@@ -59,14 +59,33 @@ jobs:
           name: Deploy new Revision
           command: gcloud beta run deploy $CLOUDRUN_STAGING_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
 
+  deploy_revision_production:
+    environment:
+      - IMAGE_NAME: *image_name
+    docker:
+      - image: google/cloud-sdk:alpine
+    steps:
+      - *auth
+      - run:
+          name: Deploy new Revision
+          command: gcloud beta run deploy $CLOUDRUN_PRODUCTION_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
+
 workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - dependencies
-      - build_deploy_image:
+      - install_dependencies
+      - build_and_deploy_image:
           requires:
-            - dependencies
+            - install_dependencies
       - deploy_revision_staging:
           requires:
-            - build_deploy_image
+            - build_and_deploy_image
+      - hold:
+          type: approval
+          requires:
+            - install_dependencies
+            - deploy_revision_staging
+      - deploy_revision_production:
+          requires:
+            - hold
