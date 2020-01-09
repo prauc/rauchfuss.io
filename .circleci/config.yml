@@ -36,6 +36,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp
+      - *copy_vendor
       - run: ./bin/phpunit
 
   test_lint:
@@ -45,6 +46,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp
+      - *copy_vendor
       - run: ./vendor/bin/phplint
 
   build_and_deploy_image:
