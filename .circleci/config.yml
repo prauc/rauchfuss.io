@@ -7,7 +7,7 @@ jobs:
       - checkout
       - run: composer install --ignore-platform-reqs
       - persist_to_workspace:
-          root: .
+          root: /tmp/workspace
           paths:
             - vendor
 
@@ -23,9 +23,11 @@ jobs:
             gcloud config list
             gcloud auth configure-docker -q
       - setup_remote_docker
+      - attach_workspace
+          at: /tmp/workspace
       - run:
           name: Copy vendor directory
-          command: cp -R /tmp/vendor .
+          command: cp -R /tmp/workspace/vendor .
       - run:
           name: Build Image & Push to Container Registry
           command: |
