@@ -36,9 +36,13 @@ class SitemapController extends AbstractController
             $path = $route->getPath();
 
             if(preg_match("/(sitemap|_error)/i", $path) != true) {
+                list($controller_namespace,) = explode("::", $route->getDefault("_controller"));
+                $controller_path = explode("\\", $controller_namespace);
+                $controller = __DIR__ . '/' . end($controller_path) . ".php";
+
                 $node = new Sitemap();
                 $node->setLoc("https://" . $request->getHttpHost() . $path);
-                $node->setLastmod(new \DateTime());
+                $node->setLastmod(file_exists($controller) ? new \DateTime(date("Y-m-d", filemtime($controller))) : new \DateTime());
 
                 array_push($sitemap['url'], $node);
             }
