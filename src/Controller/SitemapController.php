@@ -32,11 +32,11 @@ class SitemapController extends AbstractController
 
         $routes = $router->getRouteCollection();
         $sitemap = ['@xmlns' => 'http://www.sitemaps.org/schemas/sitemap/0.9', 'url' => []];
-        foreach($routes as $route) {
-            $path = $route->getPath();
+        foreach($routes as $route => $arguments) {
+            if(preg_match("/(sitemap|_error)/i", $arguments->getPath()) != true) {
+                $path = $this->generateUrl($route, ['format' => 'html']);
 
-            if(preg_match("/(sitemap|_error)/i", $path) != true) {
-                list($controller_namespace,) = explode("::", $route->getDefault("_controller"));
+                list($controller_namespace,) = explode("::", $arguments->getDefault("_controller"));
                 $controller_path = explode("\\", $controller_namespace);
                 $controller = __DIR__ . '/' . end($controller_path) . ".php";
 

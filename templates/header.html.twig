@@ -13,17 +13,17 @@
         <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
                 <li class="nav-item {% if current_path == "main" %}active{% endif %}">
-                    <a href="{{ path('main') }}" class="nav-link">
+                    <a href="{{ path('main', {'format' : 'html'}) }}" class="nav-link">
                         <i class="material-icons">home</i> Home
                     </a>
                 </li>
                 <li class="nav-item {% if current_path == "cv" %}active{% endif %}">
-                    <a href="{{ path('cv') }}" class="nav-link">
+                    <a href="{{ path('cv', {'format' : 'html'}) }}" class="nav-link">
                         <i class="material-icons">work</i> CV
                     </a>
                 </li>
                 <li class="nav-item {% if current_path == "imprint" %}active{% endif %}">
-                    <a href="{{ path('imprint') }}" class="nav-link">
+                    <a href="{{ path('imprint', {'format' : 'html'}) }}" class="nav-link">
                         <i class="material-icons">short_text</i> Legal Disclosure
                     </a>
                 </li>

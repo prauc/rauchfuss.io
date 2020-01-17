@@ -8,7 +8,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class CVController extends AbstractController
 {
     /**
-     * @Route("/cv", name="cv")
+     * @Route(
+     *     "/cv.{format}",
+     *     name="cv",
+     *     format="html"
+     * )
      */
     public function index()
     {

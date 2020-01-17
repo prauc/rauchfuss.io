@@ -8,7 +8,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class ImprintController extends AbstractController
 {
     /**
-     * @Route("/imprint", name="imprint")
+     * @Route(
+     *     "/imprint.{format}",
+     *     name="imprint",
+     *     format="html"
+     * )
      */
     public function index()
     {
