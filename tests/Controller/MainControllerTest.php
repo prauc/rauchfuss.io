@@ -9,7 +9,7 @@ class MainControllerTest extends WebTestCase
 {
     public function testShowPage() {
         $client = static::createClient();
-        $client->request('GET', '/');
+        $client->request('GET', '/index.html');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertEquals(200, $client->getResponse()->getStatusCode());

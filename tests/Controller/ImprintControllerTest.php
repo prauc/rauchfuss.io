@@ -9,7 +9,7 @@ class ImprintControllerTest extends WebTestCase
 {
     public function testShowPage() {
         $client = static::createClient();
-        $client->request('GET', '/imprint');
+        $client->request('GET', '/imprint.html');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertEquals(200, $client->getResponse()->getStatusCode());

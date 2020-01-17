@@ -9,7 +9,7 @@ class CVControllerTest extends WebTestCase
 {
     public function testShowPage() {
         $client = static::createClient();
-        $client->request('GET', '/cv');
+        $client->request('GET', '/cv.html');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
