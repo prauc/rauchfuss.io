@@ -33,8 +33,8 @@ class SitemapControllerTest extends WebTestCase
         $crawler = $client->getCrawler();
 
         $this->assertEquals(1, $crawler->filter('urlset')->count());
-        $this->assertEquals(
-            4,
+        $this->assertGreaterThan(
+            3,
             $crawler->filter('url')->count()
         );
     }
