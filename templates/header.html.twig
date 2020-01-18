@@ -27,6 +27,11 @@
                         <i class="material-icons">short_text</i> Legal Disclosure
                     </a>
                 </li>
+                <li class="nav-item {% if current_path == "contact" %}active{% endif %}">
+                    <a href="{{ path('contact', {'format' : 'html'}) }}" class="nav-link">
+                        <i class="material-icons">mail</i> Contact
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
