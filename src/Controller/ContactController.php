@@ -17,7 +17,6 @@ class ContactController extends AbstractController
      */
     public function index(Request $request, MailerInterface $mailer)
     {
-        dump($_ENV);
         $contact = new Contact();
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
