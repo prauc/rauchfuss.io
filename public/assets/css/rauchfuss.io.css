@@ -23,7 +23,7 @@
 }
 
 .header-filter:after {
-    z-index: 0;
+    z-index: -1;
 }
 
 .footer {
