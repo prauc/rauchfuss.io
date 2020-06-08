@@ -110,9 +110,6 @@ workflows:
   "Build, Test and Deploy":
     jobs:
       - install_dependencies
-      - test_functional:
-          requires:
-            - install_dependencies
       - test_lint:
           requires:
             - install_dependencies
