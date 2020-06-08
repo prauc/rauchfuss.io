@@ -90,7 +90,7 @@ jobs:
       - *auth
       - run:
           name: Deploy new Revision
-          command: gcloud beta run deploy $CLOUDRUN_STAGING_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID --set-env-vars=MAILER_DSN=$MAILER_DSN
+          command: gcloud run deploy $CLOUDRUN_STAGING_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID --set-env-vars=MAILER_DSN=$MAILER_DSN
       - run: echo "Successfully deployed to Staging"
 
   deploy_revision_production:
