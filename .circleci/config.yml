@@ -128,7 +128,7 @@ workflows:
           type: approval
           requires:
             - install_dependencies
-            - test_functional
+            #- test_functional
             - test_lint
             - deploy_revision_staging
       - deploy_revision_production:
