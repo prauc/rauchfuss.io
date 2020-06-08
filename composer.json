@@ -7,6 +7,7 @@
         "ext-iconv": "*",
         "doctrine/annotations": "^1.8",
         "overtrue/phplint": "^1.2",
+        "paragonie/sodium_compat": "^1.13",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "5.0.*",
         "symfony/console": "5.0.*",

@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block content %}
-    <script src="https://www.google.com/recaptcha/api.js?render=6Lek8eoUAAAAAJGP_uBKJ50eRspR3CHo_kJE6LqR"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6Lf3cAEVAAAAAKyidQMfyQoHC_SYKW2NAZT6ERas"></script>
     <script>
         grecaptcha.ready(function () {
-            grecaptcha.execute('6Lek8eoUAAAAAJGP_uBKJ50eRspR3CHo_kJE6LqR', { action: 'contact' }).then(function (token) {
+            grecaptcha.execute('6Lf3cAEVAAAAAKyidQMfyQoHC_SYKW2NAZT6ERas', { action: 'contact' }).then(function (token) {
                 var recaptchaResponse = document.getElementById('token');
                 recaptchaResponse.value = token;
             });

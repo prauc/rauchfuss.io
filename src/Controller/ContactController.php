@@ -16,6 +16,13 @@ use App\Entity\Contact;
 
 class ContactController extends AbstractController
 {
+    private $recaptcha;
+
+    function __construct($recaptcha)
+    {
+        $this->recaptcha = $recaptcha;
+    }
+
     /**
      * @Route("/contact.{format}", name="contact", format="html")
      */
@@ -30,7 +37,7 @@ class ContactController extends AbstractController
             $contact = $form->getData();
 
             $client = HttpClient::create();
-            $secret = "6Lek8eoUAAAAAGp1ipEi2Pas_QFoUGptn0YkHb4h";
+            $secret = $this->recaptcha;
 
             $recaptcha = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
                 'body' => [
