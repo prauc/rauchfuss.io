@@ -1,0 +1,27 @@
+{% extends 'layout.html.twig' %}
+
+{% block bodyclass %}
+    class="off-canvas-sidebar header-filter" style="background-image: url('assets/img/background.jpg'); background-size: cover; background-position: top center; background-attachment: fixed"
+{% endblock %}
+
+{% block content %}
+<div class="wrapper wrapper-full-page">
+    <div class="page-header header-filter" style="background-image: url('{{ asset('assets/img/background.jpg') }}'); background-size: cover; background-position: top center; background-attachment: fixed">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-8 ml-auto mr-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Contact me!</h3>
+                            <div class="alert alert-danger" role="alert">
+                                Sorry, dude..
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

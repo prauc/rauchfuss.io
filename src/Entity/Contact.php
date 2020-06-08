@@ -20,6 +20,7 @@ class Contact
     protected $email;
     protected $message;
     protected $copy;
+    protected $token;
 
     /**
      * @return mixed
@@ -83,5 +84,21 @@ class Contact
     public function setCopy($copy): void
     {
         $this->copy = $copy;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param mixed $token
+     */
+    public function setToken($token): void
+    {
+        $this->token = $token;
     }
 }

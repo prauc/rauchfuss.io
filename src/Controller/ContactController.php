@@ -6,8 +6,12 @@ use App\Form\ContactType;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Contact;
 
 class ContactController extends AbstractController
@@ -24,6 +28,21 @@ class ContactController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             /** @var Contact $contact */
             $contact = $form->getData();
+
+            $client = HttpClient::create();
+            $secret = "6Lek8eoUAAAAAGp1ipEi2Pas_QFoUGptn0YkHb4h";
+
+            $recaptcha = $client->request('POST', 'https://www.google.com/recaptcha/api/siteverify', [
+                'body' => [
+                    'secret' => $secret,
+                    'response' => $contact->getToken()
+                ]
+            ]);
+
+            $recaptcha = json_decode($recaptcha->getContent());
+            if($recaptcha->success == false || $recaptcha->score < .5) {
+                return $this->redirectToRoute('contact_fail', ['format' => 'html']);
+            }
 
             if($contact->getCopy()) {
                 $email = (new TemplatedEmail())
@@ -65,5 +84,12 @@ class ContactController extends AbstractController
      */
     public function success() {
         return $this->render('contact/success.html.twig');
+    }
+
+    /**
+     * @Route("/contact-fail.{format}", name="contact_fail", format="html")
+     */
+    public function fail() {
+        return $this->render('contact/fail.html.twig');
     }
 }
