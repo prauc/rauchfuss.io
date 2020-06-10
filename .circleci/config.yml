@@ -22,7 +22,8 @@ references:
       name: Create GCP Service Account Private Key
       command: |
         mkdir .secrets
-        echo "$SA_AUTH_FILE" > ./secrets/rauchfuss-io-46affd1cc183.json
+        touch ./secrets/rauchfuss-io-46affd1cc183.json
+        cat ./secrets/rauchfuss-io-46affd1cc183.json >> $SA_AUTH_FILE
 
 jobs:
   install_dependencies:
