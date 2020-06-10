@@ -17,6 +17,13 @@ references:
       name: Copy vendor directory
       command: cp -R /tmp/vendor .
 
+  create_sa_pk: &create_sa_pk
+    run:
+      name: Create GCP Service Account Private Key
+      command: |
+        mkdir .secrets
+        echo $SA_AUTH_FILE > ./secrets/rauchfuss-io-46affd1cc183.json
+
 jobs:
   install_dependencies:
     docker:
@@ -35,6 +42,8 @@ jobs:
           root: .
           paths:
             - vendor
+
+
 
   test_functional:
     docker:
@@ -68,6 +77,7 @@ jobs:
       - attach_workspace:
           at: /tmp
       - *copy_vendor
+      - *create_sa_pk
       - run:
           name: Update Build-Hash
           command: sed -i "/BUILD=/c\BUILD=$CIRCLE_SHA1" .env
@@ -90,7 +100,7 @@ jobs:
       - *auth
       - run:
           name: Deploy new Revision
-          command: gcloud run deploy $CLOUDRUN_STAGING_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID --set-env-vars=MAILER_DSN=$MAILER_DSN
+          command: gcloud run deploy $CLOUDRUN_STAGING_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
       - run: echo "Successfully deployed to Staging"
 
   deploy_revision_production:
@@ -102,7 +112,7 @@ jobs:
       - *auth
       - run:
           name: Deploy new Revision
-          command: gcloud run deploy $CLOUDRUN_PROD_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID --set-env-vars=MAILER_DSN=$MAILER_DSN
+          command: gcloud run deploy $CLOUDRUN_PROD_SERVICE_NAME --image $IMAGE_NAME --platform managed --region europe-west1 --project $GCP_PROJECTID
       - run: echo "Successfully deployed to Production"
 
 workflows:

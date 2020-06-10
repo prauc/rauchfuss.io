@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/annotations": "^1.8",
+        "google/cloud-secret-manager": "^1.0",
         "overtrue/phplint": "^1.2",
         "paragonie/sodium_compat": "^1.13",
         "symfony/apache-pack": "^1.0",
@@ -23,7 +24,8 @@
         "symfony/twig-bundle": "5.0.*",
         "symfony/validator": "5.0.*",
         "symfony/yaml": "5.0.*",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+      "ext-json": "*"
     },
     "require-dev": {
         "symfony/browser-kit": "5.0.*",
