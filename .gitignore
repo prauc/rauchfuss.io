@@ -1,5 +1,6 @@
 .idea
 .secrets
+composer.lock
 
 
 ###> symfony/framework-bundle ###
