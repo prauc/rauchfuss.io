@@ -25,7 +25,8 @@
         "symfony/validator": "5.0.*",
         "symfony/yaml": "5.0.*",
         "twig/twig": "^3.0",
-      "ext-json": "*"
+      "ext-json": "*",
+        "rauchfuss-io/gcpsecretmanager-envvarprocessor": "1.1.4"
     },
     "require-dev": {
         "symfony/browser-kit": "5.0.*",

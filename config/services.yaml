@@ -30,7 +30,8 @@ services:
         arguments:
             $recaptcha: '%env(string:gcpsecretmanager:RECAPTCHA)%'
 
-    App\DependencyInjection\EnvVarProcessor\GCPSecretManagerEnvVarProcessor:
+    Rauchfussio\DependencyInjection\EnvVarProcessor\GCPSecretManagerEnvVarProcessor:
+        class: 'GCPSecretManagerEnvVarProcessor'
         tags: ['container.env_var_processor']
         arguments:
             $gcpProjectId: '%env(string:GCP_PROJECT)%'
