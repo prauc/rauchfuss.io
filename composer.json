@@ -9,7 +9,7 @@
         "doctrine/annotations": "^1.8",
         "doctrine/doctrine-migrations-bundle": "3.0.*",
         "google/cloud-secret-manager": "^1.0",
-        "overtrue/phplint": "^1.2",
+        "overtrue/phplint": "^2.1",
         "paragonie/sodium_compat": "^1.13",
         "rauchfuss-io/gcpsecretmanager-envvarprocessor": "1.1.6",
         "symfony/apache-pack": "^1.0",
