@@ -43,8 +43,6 @@ jobs:
           paths:
             - vendor
 
-
-
   test_functional:
     docker:
       - image: circleci/php:cli
