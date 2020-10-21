@@ -126,7 +126,7 @@ workflows:
       - build_and_deploy_image:
           requires:
             - install_dependencies
-            #- test_functional
+            - test_functional
             - test_lint
       - deploy_revision_staging:
           requires:
@@ -135,7 +135,7 @@ workflows:
           type: approval
           requires:
             - install_dependencies
-            #- test_functional
+            - test_functional
             - test_lint
             - deploy_revision_staging
       - deploy_revision_production:
