@@ -33,7 +33,7 @@ jobs:
       - restore_cache:
           keys:
             - 'composer-{{ checksum "composer.lock"  }}'
-      - run: composer install --ignore-platform-reqs --with-all-dependencies
+      - run: composer update --with-all-dependencies
       - save_cache:
           key: 'composer-{{ checksum "composer.lock"  }}'
           paths:
