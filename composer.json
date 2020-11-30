@@ -31,7 +31,7 @@
     },
     "require-dev": {
         "symfony/browser-kit": "5.1.*",
-        "symfony/css-selector": "5.1.*",
+        "symfony/css-selector": "5.2.*",
         "symfony/maker-bundle": "^1.14",
         "symfony/phpunit-bridge": "^5.0",
         "symfony/var-dumper": "5.1.*"
