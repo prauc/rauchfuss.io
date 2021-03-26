@@ -11,7 +11,7 @@ jobs:
         name: Build
         runs-on: ubuntu-latest
         env:
-          IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
+          IMAGE_NAME: eu.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
         steps:
         - name: Login
           uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
@@ -54,4 +54,7 @@ jobs:
             service_account_email: ${{ secrets.GCP_EMAIL }}
             service_account_key: ${{ secrets.GCP_CREDENTIALS }}
         - name: Deploy Docker image
-          run: gcloud run deploy ${{ secrets.CLOUDRUN_STAGING_SERVICE }} --image $IMAGE_NAME --region europe-west1 --platform managed --project ${{ secrets.GCP_PROJECT_ID }}
+          run: |
+            gcloud run deploy ${{ secrets.CLOUDRUN_STAGING_SERVICE }} --image $IMAGE_NAME \
+                  --region europe-west1 --platform managed --project ${{ secrets.GCP_PROJECT_ID }} \
+                  --set-env-vars=[MAILER_DSN=${{ secrets.MAILER_DSN }}, RECAPTCHA=${{ secrets.RECAPTCHA }}]
