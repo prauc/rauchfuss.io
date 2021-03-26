@@ -11,13 +11,6 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    Rauchfussio\GCPSecretManagerEnvVarProcessor\:
-        resource: '../vendor/rauchfuss-io/gcpsecretmanager-envvarprocessor/src/*'
-        tags: ['container.env_var_processor']
-        arguments:
-            $gcpProjectId: '%env(string:GCP_PROJECT)%'
-            $gcpCredentialsFile: '%env(json:file:SA_AUTH_FILE)%'
-
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
