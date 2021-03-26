@@ -44,6 +44,8 @@ jobs:
         name: Deploy Staging
         runs-on: ubuntu-latest
         needs: [build]
+        environment:
+          name: staging
         env:
           IMAGE_NAME: eu.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
         steps:
@@ -55,7 +57,7 @@ jobs:
             service_account_key: ${{ secrets.GCP_CREDENTIALS }}
         - name: Deploy Docker image
           run: |
-            gcloud run deploy ${{ secrets.CLOUDRUN_STAGING_SERVICE }} --image $IMAGE_NAME \
+            gcloud run deploy ${{ secrets.CLOUDRUN_SERVICE }} --image $IMAGE_NAME \
                   --region europe-west1 --platform managed --project ${{ secrets.GCP_PROJECT_ID }} \
                   --set-env-vars="MAILER_DSN=${{ secrets.MAILER_DSN }},RECAPTCHA=${{ secrets.RECAPTCHA }}"
 
@@ -63,6 +65,8 @@ jobs:
         name: Deploy Production
         runs-on: ubuntu-latest
         needs: [deploy_staging]
+        environment:
+          name: production
         env:
           IMAGE_NAME: eu.gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
         steps:
@@ -74,6 +78,6 @@ jobs:
             service_account_key: ${{ secrets.GCP_CREDENTIALS }}
         - name: Deploy Docker image
           run: |
-            gcloud run deploy ${{ secrets.CLOUDRUN_STAGING_SERVICE }} --image $IMAGE_NAME \
+            gcloud run deploy ${{ secrets.CLOUDRUN_SERVICE }} --image $IMAGE_NAME \
                   --region europe-west1 --platform managed --project ${{ secrets.GCP_PROJECT_ID }} \
                   --set-env-vars="MAILER_DSN=${{ secrets.MAILER_DSN }},RECAPTCHA=${{ secrets.RECAPTCHA }}"
