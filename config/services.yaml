@@ -28,4 +28,4 @@ services:
     App\Controller\ContactController:
         class: 'App\Controller\ContactController'
         arguments:
-            $recaptcha: '%env(string:gcpsecretmanager:RECAPTCHA)%'
+            $recaptcha: '%env(string:RECAPTCHA)%'
