@@ -13,7 +13,7 @@
         "paragonie/sodium_compat": "^1.13",
         "rauchfuss-io/gcpsecretmanager-envvarprocessor": "1.1.6",
         "symfony/apache-pack": "^1.0",
-        "symfony/asset": "5.2.*",
+        "symfony/asset": "5.3.*",
         "symfony/console": "5.2.*",
         "symfony/dotenv": "5.2.*",
         "symfony/flex": "^1.3.1",
