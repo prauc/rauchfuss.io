@@ -8,4 +8,4 @@ You can contact me either by Mail ([patrick.rauchfuss@gmail.com](patrick.rauchfu
 
 ## Build status
 
-[![CircleCI](https://circleci.com/gh/prauc/rauchfuss.io.svg?style=svg)](https://circleci.com/gh/prauc/rauchfuss.io)
+[![Docker](https://github.com/prauc/rauchfuss.io/actions/workflows/cloudrun.yml/badge.svg)](https://github.com/prauc/rauchfuss.io/actions/workflows/cloudrun.yml)
