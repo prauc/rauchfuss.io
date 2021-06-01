@@ -23,7 +23,7 @@
         "symfony/mailer": "5.2.*",
         "symfony/orm-pack": "^2.0",
         "symfony/property-access": "5.2.*",
-        "symfony/serializer": "5.2.*",
+        "symfony/serializer": "5.3.*",
         "symfony/twig-bundle": "5.2.*",
         "symfony/validator": "5.2.*",
         "symfony/yaml": "5.2.*",
