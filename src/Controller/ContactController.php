@@ -80,23 +80,9 @@ class ContactController extends AbstractController
 
             $mailer->send($email);
 
-            return $this->redirectToRoute('contact_success', ['format' => 'html']);
+            return $this->render('contact/success.html.twig');
         }
 
         return $this->render('contact/index.html.twig');
-    }
-
-    /**
-     * @Route("/contact-success.{format}", name="contact_success", format="html")
-     */
-    public function success() {
-        return $this->render('contact/success.html.twig');
-    }
-
-    /**
-     * @Route("/contact-fail.{format}", name="contact_fail", format="html")
-     */
-    public function fail() {
-        return $this->render('contact/fail.html.twig');
     }
 }
