@@ -48,7 +48,7 @@ class ContactController extends AbstractController
 
             $recaptcha = json_decode($recaptcha->getContent());
             if($recaptcha->success == false || $recaptcha->score < .5) {
-                return $this->redirectToRoute('contact_fail', ['format' => 'html']);
+                return $this->render('contact/fail.html.twig');
             }
 
             if($contact->getCopy()) {
