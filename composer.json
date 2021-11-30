@@ -22,7 +22,7 @@
         "symfony/http-client": "5.*",
         "symfony/mailer": "5.*",
         "symfony/orm-pack": "^2.0",
-        "symfony/property-access": "5.2.*",
+        "symfony/property-access": "5.4.*",
         "symfony/serializer": "5.*",
         "symfony/twig-bundle": "5.*",
         "symfony/validator": "5.*",
