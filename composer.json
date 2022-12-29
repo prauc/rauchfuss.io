@@ -34,7 +34,7 @@
         "symfony/css-selector": "5.*",
         "symfony/maker-bundle": "^1.14",
         "symfony/phpunit-bridge": "^5.0",
-        "symfony/var-dumper": "5.2"
+        "symfony/var-dumper": "5.4.17"
     },
     "config": {
         "preferred-install": {
